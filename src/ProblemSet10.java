@@ -3,9 +3,9 @@ import java.util.Arrays;
 public class ProblemSet10 {
 
     public static void main(String[] args) {
-        int[] test = {3, 2, 2, 4};
-        int[] test1 = fix34(test);
-        System.out.println(Arrays.toString(test1));
+        int[] test = {10, 10};
+        boolean test1 = canBalance(test);
+        System.out.println(test1);
     }
 
     public String[] fizzBuzz(int start, int end) {
@@ -72,7 +72,6 @@ public class ProblemSet10 {
             if (numbers[i] == 3) {
                 counter3++;
                 if (i > 0 && numbers[i - 1] == 3) {
-                    System.out.println("1");
                     return null;
                 }
             } else if (numbers[i] == 4) {
@@ -85,8 +84,6 @@ public class ProblemSet10 {
         }
 
         if (counter3 != counter4) {
-            System.out.println(counter3);
-            System.out.println(counter4);
             return null;
         } else {
             int x;
@@ -128,7 +125,6 @@ public class ProblemSet10 {
             if (numbers[i] == 4) {
                 counter4++;
                 if (i > 0 && numbers[i - 1] == 4) {
-                    System.out.println("1");
                     return null;
                 }
             } else if (numbers[i] == 5) {
@@ -137,8 +133,6 @@ public class ProblemSet10 {
         }
 
         if (counter4 != counter5) {
-            System.out.println(counter4);
-            System.out.println(counter5);
             return null;
         } else {
             int x;
@@ -170,7 +164,45 @@ public class ProblemSet10 {
         return numbers;
     }
 
-    public boolean canBalance(int[] numbers) {
+    public static boolean canBalance(int[] numbers) {
+        if (numbers == null || numbers.length == 0) {
+            return false;
+        } else {
+            int firstSum = 0;
+            int secondSum= 0;
+            for (int i = 0; i < numbers.length; i++) {
+                if (i == 0) {
+                    firstSum = numbers[i];
+                    for (int k = 1; k < numbers.length; k++) {
+                        secondSum = numbers[k];
+                    }
+
+                    if (firstSum == secondSum) {
+                        return true;
+                    } else {
+                        firstSum = 0;
+                        secondSum = 0;
+                    }
+
+                } else {
+                    for (int j = 0; j <= i; j++) {
+                        firstSum += numbers[j];
+                    }
+
+                    for (int h = i + 1; h < numbers.length; h++) {
+                        secondSum += numbers[h];
+                    }
+
+                    if (firstSum == secondSum) {
+                        return true;
+                    } else {
+                        firstSum = 0;
+                        secondSum = 0;
+                    }
+                }
+
+            }
+        }
         return false;
     }
 
