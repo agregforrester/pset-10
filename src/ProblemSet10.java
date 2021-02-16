@@ -3,9 +3,8 @@ import java.util.Arrays;
 public class ProblemSet10 {
 
     public static void main(String[] args) {
-        int[] test = {10, 10};
-        boolean test1 = canBalance(test);
-        System.out.println(test1);
+        int[] test1 = squareUp(3);
+        System.out.println(Arrays.toString(test1));
     }
 
     public String[] fizzBuzz(int start, int end) {
@@ -164,7 +163,7 @@ public class ProblemSet10 {
         return numbers;
     }
 
-    public static boolean canBalance(int[] numbers) {
+    public boolean canBalance(int[] numbers) {
         if (numbers == null || numbers.length == 0) {
             return false;
         } else {
@@ -207,22 +206,101 @@ public class ProblemSet10 {
     }
 
     public boolean linearIn(int[] outer, int[] inner) {
-        return false;
+        if (outer == null || inner == null || outer.length == 0 || inner.length == 0) {
+            return false;
+        }
+
+        for (int a = 1; a < outer.length; a++) {
+            if (outer[a] < outer[a - 1]) {
+                return false;
+            }
+        }
+
+        for (int b = 1; b < inner.length; b++) {
+            if (inner[b] < inner[b - 1]) {
+                return false;
+            }
+        }
+
+        int counter = 0;
+        for (int j : inner) {
+            for (int k : outer) {
+                if (k == j) {
+                    counter++;
+                }
+            }
+        }
+
+        return counter >= inner.length;
+
     }
 
-    public int[] squareUp(int n) {
-        return null;
+    public static int[] squareUp(int n) {
+        int[] arr = new int[n*n];
+
+        if(n == 0)
+            return arr;
+
+        for(int i = n - 1; i < arr.length; i += n) {
+            for(int j = i; j >= i - i / n; j--)
+                arr[j] = i - j + 1;
+        }
+
+        return arr;
     }
 
     public int[] seriesUp(int n) {
-        return null;
+        int[] arr = new int[n*(n+1)/2];
+
+        int index = 0;
+
+        for(int i = 1; i <= n; i++) {
+            for(int j = 0; j < i; j++) {
+                arr[index + j] = j + 1;
+            }
+            index += i;
+        }
+
+        return arr;
     }
 
-    public int maxMirror(int[] numbers) {
-        return -1;
+    public int maxMirror(int[] nums) {
+        int max = 0;
+
+        for(int i = 0; i < nums.length; i++) {
+            int count = 0;
+            for(int j = nums.length - 1; j >= 0 && i + count < nums.length; j--) {
+                if(nums[i + count] == nums[j]) {
+                    count++;
+                } else {
+                    max = Math.max(max, count);
+                    count = 0;
+                }
+            }
+
+            max = Math.max(max, count);
+        }
+
+        return max;
     }
 
-    public int countClumps(int[] numbers) {
-        return -1;
+    public int countClumps(int[] nums) {
+        int count = 0;
+        int i = 0;
+
+        while(i < nums.length) {
+            int val = nums[i];
+            i++;
+            int length = 1;
+            while(i < nums.length && nums[i] == val) {
+                i++;
+                length++;
+            }
+
+            if(length > 1)
+                count++;
+        }
+
+        return count;
     }
 }
