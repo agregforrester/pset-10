@@ -3,8 +3,7 @@ import java.util.Arrays;
 public class ProblemSet10 {
 
     public static void main(String[] args) {
-        int[] test1 = squareUp(3);
-        System.out.println(Arrays.toString(test1));
+
     }
 
     public String[] fizzBuzz(int start, int end) {
@@ -235,7 +234,7 @@ public class ProblemSet10 {
 
     }
 
-    public static int[] squareUp(int n) {
+    public int[] squareUp(int n) {
         int[] arr = new int[n*n];
 
         if(n == 0)
