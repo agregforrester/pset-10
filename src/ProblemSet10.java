@@ -10,25 +10,21 @@ public class ProblemSet10 {
         if (start >= end) {
             return null;
         } else {
-            String[] newArray = new String[100];
-            int index = 0;
-            String k;
-            for (int i = start; i < end; i++) {
-                if (i % 3 == 0 && i % 5 == 0) {
-                    newArray[index] = "FizzBuzz";
-                } else if (i % 3 == 0) {
-                    newArray[index] = "Fizz";
-                } else if (i % 5 == 0) {
-                    newArray[index] = "Buzz";
-                } else {
-                    k = Integer.toString(i);
-                    newArray[index] = k;
-                }
+            String[] arr = new String[end - start];
 
-                index++;
+            for(int i = start; i < end; i++) {
+                if(i % 15 == 0) {
+                    arr[i - start] = "FizzBuzz";
+                } else if(i % 3 == 0) {
+                    arr[i - start] = "Fizz";
+                } else if(i % 5 == 0) {
+                    arr[i - start] = "Buzz";
+                } else {
+                    arr[i - start] = String.valueOf(i);
+                }
             }
 
-            return newArray;
+            return arr;
         }
     }
 
@@ -36,27 +32,21 @@ public class ProblemSet10 {
         if (numbers == null) {
             return -1;
         } else {
-            int x;
-            int span;
-            int result = 0;
+            int max = 0;
 
-            for (int number : numbers) {
-                if (numbers.length == 1) {
-                    result = 1;
-                } else {
-                    x = number;
-                    for (int i = numbers.length - 1; i >= 0; i--) {
-                        if (numbers[i] == x) {
-                            span = i;
-                            if (span > result) {
-                                result = span;
-                            }
-                        }
-                    }
-                }
+            for(int i = 0; i < numbers.length; i++) {
+                int j = numbers.length - 1;
+
+                while(numbers[i] != numbers[j])
+                    j--;
+
+                int span = j - i + 1;
+
+                if(span > max)
+                    max = span;
             }
 
-            return result;
+            return max;
         }
     }
 
@@ -84,33 +74,30 @@ public class ProblemSet10 {
         if (counter3 != counter4) {
             return null;
         } else {
-            int x;
-            for (int j = 0; j < numbers.length; j++) {
-                if (numbers[j] == 3) {
-                    for (int k = j + 2; k < numbers.length; k++) {
-                        if (numbers[k] == 4) {
-                            x = numbers[k];
-                            numbers[k] = numbers[j + 1];
-                            numbers[j + 1] = x;
-                        }
-                    }
+            int i = 0;
 
-                    for (int a = 0; a < numbers.length - 1; a++) {
-                        if (numbers[a] == 3 && numbers[a + 1] != 4) {
-                            int z;
-                            for (int b = 0; b < numbers.length; b++) {
-                                if (numbers[b] == 4) {
-                                    z = numbers[b];
-                                    numbers[b] = numbers[a + 1];
-                                    numbers[a + 1] = z;
-                                }
-                            }
-                        }
-                    }
+            while(i < numbers.length && numbers[i] != 3)
+                i++;
+
+            int j = i + 1;
+
+            while(j < numbers.length && numbers[j] != 4)
+                j++;
+
+            while(i < numbers.length) {
+                if(numbers[i] == 3) {
+                    int temp = numbers[i+1];
+                    numbers[i+1] = numbers[j];
+                    numbers[j] = temp;
+
+                    while(j < numbers.length && numbers[j] != 4)
+                        j++;
                 }
+                i++;
             }
+
+            return numbers;
         }
-        return numbers;
     }
 
     public int[] fix45(int[] numbers) {
@@ -133,75 +120,48 @@ public class ProblemSet10 {
         if (counter4 != counter5) {
             return null;
         } else {
-            int x;
-            for (int j = 0; j < numbers.length; j++) {
-                if (numbers[j] == 4) {
-                    for (int k = j + 2; k < numbers.length; k++) {
-                        if (numbers[k] == 5) {
-                            x = numbers[k];
-                            numbers[k] = numbers[j + 1];
-                            numbers[j + 1] = x;
-                        }
-                    }
+            int i = 0;
+            int j = 0;
 
-                    for (int a = 0; a < numbers.length - 1; a++) {
-                        if (numbers[a] == 4 && numbers[a + 1] != 5) {
-                            int z;
-                            for (int b = 0; b < numbers.length; b++) {
-                                if (numbers[b] == 5) {
-                                     z = numbers[b];
-                                     numbers[b] = numbers[a + 1];
-                                     numbers[a + 1] = z;
-                                }
-                            }
-                        }
-                    }
+            while(j < numbers.length && numbers[j] != 5)
+                j++;
+
+            while(i < numbers.length) {
+                if(numbers[i] == 4) {
+                    int temp = numbers[i+1];
+                    numbers[i+1] = numbers[j];
+                    numbers[j] = temp;
+
+                    while((j < numbers.length && numbers[j] != 5) || j == i + 1)
+                        j++;
                 }
+                i++;
             }
+
+            return numbers;
         }
-        return numbers;
     }
 
     public boolean canBalance(int[] numbers) {
         if (numbers == null || numbers.length == 0) {
             return false;
         } else {
-            int firstSum = 0;
-            int secondSum= 0;
-            for (int i = 0; i < numbers.length; i++) {
-                if (i == 0) {
-                    firstSum = numbers[i];
-                    for (int k = 1; k < numbers.length; k++) {
-                        secondSum = numbers[k];
-                    }
+            int first = 0;
+            int second = 0;
 
-                    if (firstSum == secondSum) {
-                        return true;
-                    } else {
-                        firstSum = 0;
-                        secondSum = 0;
-                    }
+            for (int i = 0; i < numbers.length; i++)
+                second += numbers[i];
 
-                } else {
-                    for (int j = 0; j <= i; j++) {
-                        firstSum += numbers[j];
-                    }
+            for (int i = 0; i <= numbers.length - 2; i++) {
+                first += numbers[i];
+                second -= numbers[i];
 
-                    for (int h = i + 1; h < numbers.length; h++) {
-                        secondSum += numbers[h];
-                    }
-
-                    if (firstSum == secondSum) {
-                        return true;
-                    } else {
-                        firstSum = 0;
-                        secondSum = 0;
-                    }
-                }
-
+                if (first == second)
+                    return true;
             }
+
+            return false;
         }
-        return false;
     }
 
     public boolean linearIn(int[] outer, int[] inner) {
@@ -220,18 +180,24 @@ public class ProblemSet10 {
                 return false;
             }
         }
+        
+        int i = 0;
+        int j = 0;
 
-        int counter = 0;
-        for (int j : inner) {
-            for (int k : outer) {
-                if (k == j) {
-                    counter++;
-                }
+        while(i < inner.length && j < outer.length) {
+            if(inner[i] > outer[j]) {
+                j++;
+            } else if(inner[i] < outer[j]) {
+                return false;
+            } else {
+                i++;
             }
         }
 
-        return counter >= inner.length;
+        if(i != inner.length)
+            return false;
 
+        return true;
     }
 
     public int[] squareUp(int n) {
